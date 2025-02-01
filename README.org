@@ -1,0 +1,51 @@
+#+title: Readme | cacaoML
+#+author: Matthew Younger - Pledged
+
+#+attr_html: :alt  :align left :class img
+[[./images/pexels-topeasokere-14681543.jpg][Photo by Tope A. Asokere - Pexels]]
+
+* Overview:
+
+- The primary goal is to use Machine Learning techniques, literate programming,
+  and open-source software solutions to conduct a critical and transparent analysis on
+  cacao crops across the globe and their production outlook for the future.
+
+- As a complimentary goal, this work seeks to investigate (per its creation) and demonstrate the merits of its transparent composition style:
+  1. *literate programming*
+     - per the [[https://en.wikipedia.org/wiki/Literate_programming][Wikipedia Description]], the emphasis is ensuring the code,
+       which is supporting the conclusion of the piece, is readily examined for reliability.
+
+  2. *version control & immutability*
+     Every well-established news source maintains errata. I believe that in this brave new world, we normalise the use case of Git to other frontiers.
+
+  3. *Open-source software*
+     There are several reasons to embrace [[https://en.wikipedia.org/wiki/Open-source_software][open-source software]] in research,
+     not least of which is ensuring the widest-possible access to its conclusions which may have global implications.
+     FOSS software ensures the best chances of avoiding pay walls and hefty license fees, or obsolesence.
+
+     In the worst-case scenario, at least the source code for the necessary applications will remain available and not be buried
+     with the company at some future date.
+
+  4. *Plaintext data*
+     Technology changes at a rapid pace. Without knowing how data will be accessed in the future (web-based HTML, PDF, VR, etc),
+     plaintext seems the best long-term option to ensure that whatever comes to pass, this data could be readily parsed into
+     whatever Lingua Franca presents itself later-on.
+
+  5. *Stable visual insights (PNGs, JPEGs, etc)*
+     With similar sentiment, while interactive charts and graphs are wonderful for illustrative purposes, they are also very sensitive
+     to change. Minor browser bugs and obsolesence of code libraries is an enemy to long-term viability of such tools.
+
+  6. *Community Engagement*
+     Stemming from the previous points, this final point is offered as a means to help recover the global community's trust in reporting, which is at an all-time low.
+
+** STRT Stage 1
+DEADLINE: <2025-02-07 Fri>
+*** [ ] Overview Description and Goals
+*** [ ] Gather initial data for project
+*** [ ] Conduct basic analysis to determine ML approach?
+
+** TODO Stage 2
+** TODO Stage 3
+** TODO Stage 4
+
+* Goal:
