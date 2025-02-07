@@ -46,11 +46,11 @@
 
 ** STRT Stage 1
 DEADLINE: <2025-02-07 Fri>
-*** [ ] Overview Description and Goals
-*** [ ] Gather initial data for project
-*** [ ] Conduct basic analysis to determine ML approach?
+*** [X] Overview Description and Goals
+*** [X] Gather initial data for project
 
 ** TODO Stage 2
+*** [ ] Conduct basic analysis to determine ML approach?
 ** TODO Stage 3
 ** TODO Stage 4
 
