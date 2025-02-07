@@ -8,7 +8,13 @@
 
 - The primary goal is to use Machine Learning techniques, literate programming,
   and open-source software solutions to conduct a critical and transparent analysis on
-  cacao crops across the globe and their production outlook for the future.
+  cacao crops across the globe and their future production potential as the earth's climate undergoes changes.
+  This plant is non-native to the areas it's now primarily grown in, which theoretically means it's more sensitive to such changes.
+
+  There exists an abundance of climate data from NOAA, corresponding to yearly per-country summaries of cacao exportation courtesy of the United Nations.
+  The volume and quality of the data suggests this is a good candidate for machine learning. i.e. A model could be trained to predict
+  each region's production capacity for future years. Given the high potential for market disruption in the underdeveloped nations where this crop is grown,
+  metrics and predictions such as these can give useful insights to help the industry cope with its many challenges.
 
 - As a complimentary goal, this work seeks to investigate (per its creation) and demonstrate the merits of its transparent composition style:
   1. *literate programming*

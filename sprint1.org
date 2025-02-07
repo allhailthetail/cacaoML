@@ -1,0 +1,77 @@
+#+title: Sprint 1
+#+author: Matthew Younger | Pledged
+#+date:<2025-02-04 Tue>
+
+* Group Members:
+
+| Team Member     |
+|-----------------|
+| Matthew Younger |
+| I.S.O           |
+
+* Proposal:
+** Problem
+- Theobroma cacao is non-native to the areas it's now primarily grown in, which suggests it could be more sensitive to climate changes in the future.
+  Given the high potential for market disruption in the underdeveloped nations where this crop is grown, metrics and predictions given from a trained ML model
+  could give useful insights to this fragile industry.
+
+- Mitigate future shortages
+
+- Provide crop farmers and shareholders with smarter insights
+  Particularly important for farmers, who are often disadvantaged.
+
+- Evaluate long-term sustainability
+
+- Plan future crops around climate insights
+  
+** Reason
+- [[https://www.npr.org/2024/05/15/1198909986/chocolate-cocoa-prices-shortage-climate-change][NPR - Climate Change Impacting Cacao Production]]
+  Climate change is in question
+
+- [[https://www.reuters.com/markets/commodities/african-cocoa-plants-run-out-beans-global-chocolate-crisis-deepens-2024-03-13/][Cacao Crisis Worstens for 4th Year - Reuters]]
+  Problem has been ongoing and largely ignored
+
+- [[https://hir.harvard.edu/bittersweet-the-harsh-realities-of-chocolate-production-in-west-africa/][Harsh Realities of Chocolate Production in W. Africa]]
+  Shows specifically that the issue is multivariable
+
+- [[https://www.sciencedaily.com/releases/2024/04/240423155910.htm][Crops Threatened by Swollen Shoot Virus]]
+  Virus and blight potentially at play
+
+** Constraints
+- Causal relationships are more complex than a climate model can account for
+  i.e. issues on the country level have more of an impact than the environment/weather for a given year.
+  Thus, a model will not be accurate.
+
+- Production data is on a year summary basis
+  It remains to be seen if a year's weather behavior can be summarized and correlated to a year's output of crop.
+
+- Data quality may be biased.
+  i.e. Per Harvard, most of the crops in Ivory Coast are on illegal land. Reporting may be inaccurate because it's under the table.
+
+- Agricultural policy changes
+  With the future of crop lands in question, future output could be vastly different, independent of model predictions
+
+** Goals
+- The primary goal is to use Machine Learning techniques, literate programming,
+  and open-source software solutions to conduct a critical and transparent analysis on
+  cacao crops across the globe and their future production potential as the earth's climate undergoes changes.
+
+- As a side goal (though unsure how to measure) I'm interested in literate programming, git, FOSS,
+  as a means to conduct such research transparently. In an age of misinformation and bias, there seems a responsibility
+  for data scientists to make their reports in such a manner.
+
+** Metrics
+- NOAA Weater Data
+- United Nations Cacao Production Data
+- Split data set training/test, potentially re-evaluate in a few years to gauge accuracy long-term?
+
+** References
+[[file:references.bib]]
+
+* AI Disclaimer:
+Per class rules, observe the following disclaimer:
+
+Search results and news feeds almost universally contain AI-generated content, summaries, and links.
+I am obligated to disclose that in researching for this project, I was exposed or potentially exposed to such content.
+It is not personal goal, implied or explicit, that I used this content to circumvent my duty as a student
+to complete my own work. As a matter of personal integrity, I maintain this work is being conducted in such a manner that it remains my own.

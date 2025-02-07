@@ -63,7 +63,7 @@ ggplot(cacao, aes(x=reorder(Country, -Production), y=Production)) +
 #+end_src
 
 #+RESULTS:
-[[file:./images/output_by_country.png]]
+ [[file:./images/output_by_country.png]]bi
 
 #+begin_comment
 Interestingly, [[https://en.wikipedia.org/wiki/Theobroma_cacao][Theobroma cacao]], though originally native to the American tropics, is primarily produced in West Africa and Southeast Asia. All other cacao-producing countries fall significantly below the average per-country output.
@@ -72,3 +72,23 @@ Though Wikipedia readily states this fact, the data shows just this is more disp
 
 This is a significant finding from the early data: ~the future of cocoa hinges on three countries.~
 #+end_comment
+*** Digging Deeper:
+
+For the sake of reducing ~out-of-sample data~ we need to reduce our weather data to the sub-regions of each country in question
+
+NOAA's dataset is providing Global Summary of the Month data...
+
+| Country            | City        | Dataset     |
+|--------------------+-------------+-------------|
+| Indonesia          | Makassar    | IDM00097180 |
+| Cote d'Ivoire      | San Pedro   | IVM00065594 |
+| Ghana              | Kumasi      | GHM00065442 |
+| Ecuador            | Guayaquil   | ECM00084226 |
+| Cameroon           | Buea        | CM000004910 |
+| Nigeria            | Ibadan      | NIM00065201 |
+| Brazil             | Ilhéus      | BR048916940 |
+| Peru               | Tarapoto    | PE000084455 |
+| Dominican Republic | Santiago    | DRM00078458 |
+| Colombia           | San Vicente | CM000004910 |
+
+[[cite:@GSOM_V1]]
