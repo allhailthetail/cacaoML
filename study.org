@@ -91,4 +91,4 @@ NOAA's dataset is providing Global Summary of the Month data...
 | Dominican Republic | Santiago    | DRM00078458 |
 | Colombia           | San Vicente | CM000004910 |
 
-[[cite:@GSOM_V1]]
+[cite:@GSOM_V1]

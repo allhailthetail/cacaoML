@@ -1,0 +1,71 @@
+#+title: Sprint 2
+#+author: Matthew Younger | Pledged
+#+date:<2025-03-01 Sat>
+#+STARTUP: overview hideblocks indent
+#+bibliography: references.bib
+
+* Group Members:
+
+| Team Member     |
+|-----------------|
+| Matthew Younger |
+
+* Literature Review:
+
+For the Literature Review portion, I've employed the use of NotebookLM and some [[https://extensions.libreoffice.org/en/extensions/show/single-column-academic-article?Tags%5B%5D=undefined][templates]] from LibreOffice. In addition, a NotebookLM notebook was used to make illuminate connections between other scholarly articles and my own ambitions for present and future projects in this area.
+
+Per the review, I hilighted the following challenges facing the industry:
+
+1. Climate factors
+2. Disease
+3. Socioeconomic struggles
+4. Technological challenges
+
+My conclusion was that these issues are complex and interconnected. I found that genetic technology
+is already being used with great effect, but that this doesn't seem to be addressing the more
+present issues /on the battlefield./
+
+It seems very little has been done to implement these theoretical solu-
+tions (ML, Deep Learning) into actual operations. It seems obvious that until
+such efforts are made in earnest, the industry will continue to lose out on any
+benefits therein. Theory and any advancement will likely be of little use when
+the technology isn’t being developed according to actual conditions, nor imple-
+mented in the crops.
+
+With this in mind, particular considerations should be made, such as to-
+tal cost, power constraints, internet connectivity requirements, maintenance,
+knowledge required to implement and operate, and so on. In short, simple and
+effective solutions seem likely to have the biggest impact. AI-centric, power-in-
+tensive, big data solutions seem very unlikely to be practical, which goes di-
+rectly against the current trend in 2025.
+
+All things considered, it seems that the Machine Learning has potential
+to be impactful in this industry. A well-trained model could predict fungal in-
+fections before they’re visible on the trees; perhaps drones with cameras could
+achieve this end. Smarter irrigation which can take into account localized
+weather predictions could conserve water and lend to better yields. Likewise,
+smart drying beds could result in less losses on otherwise viable yields.
+
+Ultimately, I believe there are many unexplored cases where simple tech-
+nology powered by effective machine learning algorithms could be of great ben-
+efit. In particular, I propose that self-contained, robust, decentralized imple-
+mentations would seem to logically be most promising for having the greatest
+impact. Presently, further research and surveys seems necessary in order to nar-
+row down on an ideal pilot project.
+
+With all this in mind, my present project still seems viable. A climate model using quality data sourced
+[cite:@GSOM_V1] near to popular grow sites for Cacao could be implemented in this or another project in many ways. Additionally, that same model could be used in tandem with the UN FAO data [cite:@UN_FAO] to
+make intelligent predictions about future yield, which could indirectly influence decisions on a local
+level, much like an almanac, but actually relevant and accurate.
+
+* AI Disclaimer:
+Per class rules, observe the following disclaimer:
+
+In this portion of the project, AI was used to assist in /revealing connections/ between a wide range of
+different scholarly works to reveal patterns not otherwise obvious. This was part of this portion of the class
+assignment, but I also received _assistance_ from the technology with glad tidings. I feel it was appropriate
+given the time constraints and of great benefit.
+
+Additionally, AI was used in arriving at an appropriate abstract for my literature review. Not having ready access to a peer while writing this paper, this was valuable as a means to cross-check my work while I work independently.
+
+I still maintain the bulk effort and work is my own.

@@ -6,15 +6,32 @@
 
 * Overview:
 
-- The primary goal is to use Machine Learning techniques, literate programming,
-  and open-source software solutions to conduct a critical and transparent analysis on
-  cacao crops across the globe and their future production potential as the earth's climate undergoes changes.
-  This plant is non-native to the areas it's now primarily grown in, which theoretically means it's more sensitive to such changes.
-
   There exists an abundance of climate data from NOAA, corresponding to yearly per-country summaries of cacao exportation courtesy of the United Nations.
   The volume and quality of the data suggests this is a good candidate for machine learning. i.e. A model could be trained to predict
   each region's production capacity for future years. Given the high potential for market disruption in the underdeveloped nations where this crop is grown,
   metrics and predictions such as these can give useful insights to help the industry cope with its many challenges.
+
+
+** DONE Stage 1
+DEADLINE: <2025-02-07 Fri>
+*** [X] Overview Description and Goals
+*** [X] Gather initial data for project
+
+** TODO Stage 2
+DEADLINE: <2025-03-07 Fri>
+*** [-] Conduct basic analysis to determine ML approach?
+*** [X] Gather Research
+*** [X] Utilize NotebookLM to gather insights from other scholarly articles
+*** [X] Write Literature Review
+
+** TODO Stage 3
+
+** TODO Stage 4
+
+* Goal:
+
+- Develop a climate model using quality data [cite:@GSOM_V1] sourced near popular grow sites for Cacao,
+  which could could be used in tandem with the UN FAO data [cite:@UN_FAO] to make intelligent predictions about future yield, and indirectly influence decisions on a local level, much like an almanac.
 
 - As a complimentary goal, this work seeks to investigate (per its creation) and demonstrate the merits of its transparent composition style:
   1. *literate programming*
@@ -43,15 +60,3 @@
 
   6. *Community Engagement*
      Stemming from the previous points, this final point is offered as a means to help recover the global community's trust in reporting, which is at an all-time low.
-
-** STRT Stage 1
-DEADLINE: <2025-02-07 Fri>
-*** [X] Overview Description and Goals
-*** [X] Gather initial data for project
-
-** TODO Stage 2
-*** [ ] Conduct basic analysis to determine ML approach?
-** TODO Stage 3
-** TODO Stage 4
-
-* Goal:

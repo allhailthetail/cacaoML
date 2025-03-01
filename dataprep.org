@@ -1,0 +1,134 @@
+#+title: Data Preparation
+#+author: Matthew Younger | Pledged
+#+date: <2025-02-27 Thu>
+#+STARTUP: overview hideblocks indent
+#+OPTIONS: toc:nil num:nil ^nil
+#+PROPERTY: header-args:R :session *R* :results output :exports both :noweb yes
+
+* Group Members:
+
+| Team Member     |
+|-----------------|
+| Matthew Younger |
+
+* Description:
+
+The corresponding climate datasets and yearly Cocoa eports data need to be analyzed, cleaned, and imported
+into R, per the guidance of our in-clalss instruction, the text recommended for the course,
+and other common-sense data science principles per my own discretion.
+
+* Initial exploration:
+
+1. Pre-import checks:
+
+   As head reveals, our climate datasets appear to have headers... This is good news, as
+   ~read.csv~ expects headers by default.
+
+   #+begin_src bash
+   head -n 3 ./datasets/BR048916940.csv
+   #+end_src
+
+   #+RESULTS:
+   | STATION     |    DATE | LATITUDE | LONGITUDE | ELEVATION | NAME       | DP01 | DP01_ATTRIBUTES | DP10 | DP10_ATTRIBUTES | DP1X | DP1X_ATTRIBUTES | DT00 | DT00_ATTRIBUTES | DT32 | DT32_ATTRIBUTES | DYNT | DYNT_ATTRIBUTES |     DYXP | DYXP_ATTRIBUTES | EMNT | EMNT_ATTRIBUTES | EMXP | EMXP_ATTRIBUTES |  PRCP | PRCP_ATTRIBUTES | TMIN | TMIN_ATTRIBUTES |
+   | BR048916940 | 1966-02 |    -14.8 |   -39.067 |      60.0 | ILHEUS, BR |   17 | ,I              |   13 | ,I              |    0 | ,I              |      |                 |      |                 |      |                 | 19660224 | ,,I             |      |                 | 22.0 | ,,I,24,         |  99.7 | ,,,I            |      |                 |
+   | BR048916940 | 1966-03 |    -14.8 |   -39.067 |      60.0 | ILHEUS, BR |   24 | ,I              |   15 | ,I              |    4 | ,I              |      |                 |      |                 |      |                 | 19660320 | ,,I             |      |                 | 42.0 | ,,I,20,         | 255.0 | ,,,I            |      |                 |
+
+   #+begin_src R
+   args(read.csv)
+   #+end_src
+
+   #+RESULTS:
+   : function (file, header = TRUE, sep = ",", quote = "\"", dec = ".",
+   :     fill = TRUE, comment.char = "", ...)
+   : NULL
+
+2. Previewing the first database(s)
+
+   It's immediately obvious to me that these various datasets, although standardized to some degree,
+   don't all contain the same columns. For one reason or another, some don't contain TAVG (Average Temperature).  This is a bit of a let down, but let's see what we can find in common.
+
+   Given I myself am a novice, ~I bravely resorted to stack overflow~ for some ideas for determining common columns...
+
+   - Per NOAA's website, the common columns are:
+
+     1. NAME
+     2. STATION
+     3. DATE
+     4. LAT/LON
+     5. Elevation
+
+     6. DT00
+        #+begin_comment
+        "DT00" = Number of days with maximum temperature <= 0 degrees Fahrenheit/-17.8 degrees Celsius.
+        #+end_comment
+
+     7. DT32
+        #+begin_comment
+         "DT32" = Number of days with minimum temperature <= 32 degrees Fahrenheit/0 degrees Celsius.
+        #+end_comment
+
+     8. DYNT
+        #+begin_comment
+         "DYNT" = Day of month of extreme minimum temperature YYYYMMDD
+        #+end_comment
+
+     9. EMNT
+        #+begin_comment
+         "EMNT" = Extreme minimum temperature for month. Lowest daily minimum temperature for the month. Given in Celsius or Fahrenheit depending on user specification.
+        #+end_comment
+
+     10. TMIN
+         #+begin_comment
+          "TMIN" = Monthly Minimum Temperature. Average of daily minimum temperature given in... (Celsius)
+         #+end_comment
+
+   #+begin_src R
+
+   # Big thanks to SO for rendering much-needed aid.
+
+   df_1 <- read.csv("./datasets/BR048916940.csv")
+   df_2 <- read.csv("./datasets/CM000004910.csv")
+   df_3 <- read.csv("./datasets/DRM00078458.csv")
+   df_4 <- read.csv("./datasets/ECM00084226.csv")
+   df_5 <- read.csv("./datasets/GHM00065442.csv")
+   df_6 <- read.csv("./datasets/IDM00097180.csv")
+   df_7 <- read.csv("./datasets/IVM00065594.csv")
+   df_8 <- read.csv("./datasets/NIM00065201.csv")
+   df_9 <- read.csv("./datasets/PE000084455.csv")
+
+   datasets <- list(df_1 = df_1, df_2 = df_2, df_3 = df_3,
+                    df_4 = df_4, df_5 = df_5, df_6 = df_6,
+                    df_7 = df_7, df_8 = df_8, df_9 = df_9)
+
+   common_columns <- Reduce(intersect, lapply(datasets, colnames))
+   print(common_columns)
+   #+end_src
+
+   #+RESULTS:
+   : [1] "STATION"         "DATE"            "LATITUDE"        "LONGITUDE"       "ELEVATION"       "NAME"
+   :  [7] "DT00"            "DT00_ATTRIBUTES" "DT32"            "DT32_ATTRIBUTES" "DYNT"            "DYNT_ATTRIBUTES"
+   : [13] "EMNT"            "EMNT_ATTRIBUTES" "TMIN"            "TMIN_ATTRIBUTES"
+
+   
+   - This is very unexpected.  My hope in selecting NOAA for thier data was that they'd provide *all* of the datapoints, per the docs.  Still, it's not bad for government work... Let's preview some more and see what we can salvage...
+
+    #+begin_src R
+    # Find which datasets contain all specified column names using lapply
+
+    # Per the literature review, these are relevant features for our dataset...  I'd hoped for more, though,
+    #   particularly humidity...
+
+    column_names <- c("TAVG", "TMIN", "TMAX", "PRCP")
+    datasets_with_columns_list <- lapply(datasets, function(x) all(column_names %in% colnames(x)))
+
+    # Get the names of datasets that contain all specified columns
+    datasets_names_list <- names(datasets)[unlist(datasets_with_columns_list)]
+    print(datasets_names_list)
+
+    #+end_src
+
+    #+RESULTS:
+    : [1] "df_2" "df_3" "df_4" "df_5" "df_6" "df_7" "df_9"
+
+ #+RESULTS:
+ : [1] "df_2" "df_3" "df_4" "df_5" "df_6" "df_7" "df_9"
