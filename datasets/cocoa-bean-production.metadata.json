@@ -1,0 +1,32 @@
+{
+  "chart": {
+    "title": "Cocoa bean production",
+    "subtitle": "Cocoa bean production is measured in tonnes.",
+    "citation": "Food and Agriculture Organization of the United Nations (2023)",
+    "originalChartUrl": "https://ourworldindata.org/grapher/cocoa-bean-production?v=1&csvType=filtered&useColumnShortNames=false",
+    "selection": [
+      "Brazil",
+      "India"
+    ]
+  },
+  "columns": {
+    "Cocoa beans | 00000661 || Production | 005510 || tonnes": {
+      "titleShort": "Cocoa bean production",
+      "titleLong": "Cocoa bean production - FAO",
+      "descriptionKey": [],
+      "shortUnit": "t",
+      "unit": "tonnes",
+      "timespan": "1961-2022",
+      "type": "Numeric",
+      "owidVariableId": 835212,
+      "shortName": "cocoa_beans__00000661__production__005510__tonnes",
+      "lastUpdated": "2024-03-14",
+      "nextUpdate": "2025-03-14",
+      "citationShort": "Food and Agriculture Organization of the United Nations (2023) – with major processing by Our World in Data",
+      "citationLong": "Food and Agriculture Organization of the United Nations (2023) – with major processing by Our World in Data. “Cocoa bean production – FAO” [dataset]. Food and Agriculture Organization of the United Nations, “Production: Crops and livestock products” [original data].",
+      "fullMetadata": "https://api.ourworldindata.org/v1/indicators/835212.metadata.json"
+    }
+  },
+  "dateDownloaded": "2025-02-01",
+  "activeFilters": {}
+}

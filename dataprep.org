@@ -17,7 +17,8 @@ The corresponding climate datasets and yearly Cocoa eports data need to be analy
 into R, per the guidance of our in-clalss instruction, the text recommended for the course,
 and other common-sense data science principles per my own discretion.
 
-* Initial exploration:
+* Initial Exploration:
+** Climate Data:
 
 1. Pre-import checks:
 
@@ -112,13 +113,15 @@ and other common-sense data science principles per my own discretion.
    
    - This is very unexpected.  My hope in selecting NOAA for thier data was that they'd provide *all* of the datapoints, per the docs.  Still, it's not bad for government work... Let's preview some more and see what we can salvage...
 
+   - I'm going to define a var (column_names) for the rownames I'm interested in, because I'll use it again later.
+
     #+begin_src R
     # Find which datasets contain all specified column names using lapply
 
     # Per the literature review, these are relevant features for our dataset...  I'd hoped for more, though,
     #   particularly humidity...
 
-    column_names <- c("TAVG", "TMIN", "TMAX", "PRCP")
+    column_names <- c("STATION", "DATE", "TAVG", "TMIN", "TMAX", "PRCP")
     datasets_with_columns_list <- lapply(datasets, function(x) all(column_names %in% colnames(x)))
 
     # Get the names of datasets that contain all specified columns
@@ -130,5 +133,457 @@ and other common-sense data science principles per my own discretion.
     #+RESULTS:
     : [1] "df_2" "df_3" "df_4" "df_5" "df_6" "df_7" "df_9"
 
- #+RESULTS:
- : [1] "df_2" "df_3" "df_4" "df_5" "df_6" "df_7" "df_9"
+
+ - Grabbing what we're interested in:
+   (I don't see harm in overwriting them for now...)
+
+   I actually notice now that a few of these dfs only contain a few observations.
+   That limits their usefulness for longterm predictions.  As such, I'm
+   proceeding with ~df_2, df_3, df_6, df_7, df_9~
+
+   #+begin_src R
+   df_2 <- df_2[, column_names]
+   df_3 <- df_3[, column_names]
+   df_4 <- df_4[, column_names]
+   df_5 <- df_5[, column_names]
+   df_6 <- df_6[, column_names]
+   df_7 <- df_7[, column_names]
+   df_9 <- df_9[, column_names]
+
+
+   str(df_2)
+   str(df_3)
+   str(df_4)
+   str(df_5)
+   str(df_6)
+   str(df_7)
+   str(df_9)
+
+   #+end_src
+
+   #+RESULTS:
+   #+begin_example
+   'data.frame':	198 obs. of  6 variables:
+    $ STATION: chr  "CM000004910" "CM000004910" "CM000004910" "CM000004910" ...
+    $ DATE   : chr  "1948-01" "1948-02" "1948-03" "1948-04" ...
+    $ TAVG   : num  27 27.3 27.5 27.2 27.1 ...
+    $ TMIN   : num  23.1 23.1 23.6 22.9 23.4 ...
+    $ TMAX   : num  30.9 31.5 31.5 31.4 30.9 ...
+    $ PRCP   : num  40.2 126.3 145.1 213.8 374.7 ...
+   'data.frame':	253 obs. of  6 variables:
+    $ STATION: chr  "DRM00078458" "DRM00078458" "DRM00078458" "DRM00078458" ...
+    $ DATE   : chr  "1996-06" "1996-07" "1996-08" "1996-09" ...
+    $ TAVG   : num  28.2 28 28.4 27.9 27.6 ...
+    $ TMIN   : num  23.1 22.7 23 22.2 22.1 ...
+    $ TMAX   : num  33.2 33.3 33.8 33.5 33.2 ...
+    $ PRCP   : num  NA NA NA NA NA NA NA NA NA NA ...
+   'data.frame':	20 obs. of  6 variables:
+    $ STATION: chr  "ECM00084226" "ECM00084226" "ECM00084226" "ECM00084226" ...
+    $ DATE   : chr  "1973-01" "1973-02" "1973-03" "1975-09" ...
+    $ TAVG   : num  NA NA NA NA NA NA NA NA NA NA ...
+    $ TMIN   : num  NA NA NA 19.6 19.2 ...
+    $ TMAX   : num  NA NA NA NA NA NA NA NA NA NA ...
+    $ PRCP   : num  74.2 111 47.4 NA NA ...
+   'data.frame':	12 obs. of  6 variables:
+    $ STATION: chr  "GHM00065442" "GHM00065442" "GHM00065442" "GHM00065442" ...
+    $ DATE   : chr  "1997-04" "1997-05" "1997-06" "1997-07" ...
+    $ TAVG   : num  NA 27.1 25.9 NA 28 ...
+    $ TMIN   : num  NA 22.7 22.1 NA 22.5 ...
+    $ TMAX   : num  31.9 31.4 29.6 28.2 33.5 ...
+    $ PRCP   : num  NA NA 262 NA NA ...
+   'data.frame':	214 obs. of  6 variables:
+    $ STATION: chr  "IDM00097180" "IDM00097180" "IDM00097180" "IDM00097180" ...
+    $ DATE   : chr  "1958-04" "1974-05" "1974-11" "1976-10" ...
+    $ TAVG   : num  27.4 NA NA NA NA NA NA NA NA NA ...
+    $ TMIN   : num  22.6 NA NA NA NA ...
+    $ TMAX   : num  32.2 NA NA NA NA ...
+    $ PRCP   : num  NA 4.1 13 0 0 0 0 4.1 15 19.8 ...
+   'data.frame':	259 obs. of  6 variables:
+    $ STATION: chr  "IVM00065594" "IVM00065594" "IVM00065594" "IVM00065594" ...
+    $ DATE   : chr  "1978-10" "1978-11" "1978-12" "1979-01" ...
+    $ TAVG   : num  NA 26.3 NA NA NA ...
+    $ TMIN   : num  NA 23.1 NA NA NA ...
+    $ TMAX   : num  NA 29.6 NA 30.6 30.6 ...
+    $ PRCP   : num  25.7 13.4 123.9 NA NA ...
+   'data.frame':	306 obs. of  6 variables:
+    $ STATION: chr  "PE000084455" "PE000084455" "PE000084455" "PE000084455" ...
+    $ DATE   : chr  "1963-03" "1963-07" "1963-10" "1963-11" ...
+    $ TAVG   : num  NA NA NA NA NA NA NA NA NA NA ...
+    $ TMIN   : num  21.2 17.8 19.2 19.7 19.4 ...
+    $ TMAX   : num  NA NA NA NA NA NA NA NA NA NA ...
+    $ PRCP   : num  NA NA NA NA NA NA NA NA NA NA ...
+   #+end_example
+
+   - Now, we really need to convert the dates to timeseries for the future data manipulations.
+     Also, the long station IDs are unweildy and obnoxious.
+
+   - Inspecting each df, I can see that the data from the dominican republic is the most complete.
+     Unfortunately, the other datasets have a lot of missing information, which is unfortunate.
+     Regardless, I'm going to now assemble all the dataframes into one larger dataframe and sort by date.
+
+   #+begin_src R
+   df_2$STATION <- "Colombia"
+   df_3$STATION <- "Dom_Rep"
+   df_6$STATION <- "Indonesia"
+   df_7$STATION <- "Ivory_Coast"
+   df_9$STATION <- "Peru"
+
+   df_2$DATE <- as.Date(paste0(df_2$DATE, "-01"))
+   df_3$DATE <- as.Date(paste0(df_3$DATE, "-01"))
+   df_6$DATE <- as.Date(paste0(df_6$DATE, "-01"))
+   df_7$DATE <- as.Date(paste0(df_7$DATE, "-01"))
+   df_9$DATE <- as.Date(paste0(df_9$DATE, "-01"))
+
+   str(df_2)
+   str(df_3)
+   str(df_6)
+   str(df_7)
+   str(df_9)
+   #+end_src
+
+   #+RESULTS:
+   #+begin_example
+   'data.frame':	198 obs. of  6 variables:
+    $ STATION: chr  "Colombia" "Colombia" "Colombia" "Colombia" ...
+    $ DATE   : Date, format: "1948-01-01" "1948-02-01" "1948-03-01" "1948-04-01" ...
+    $ TAVG   : num  27 27.3 27.5 27.2 27.1 ...
+    $ TMIN   : num  23.1 23.1 23.6 22.9 23.4 ...
+    $ TMAX   : num  30.9 31.5 31.5 31.4 30.9 ...
+    $ PRCP   : num  40.2 126.3 145.1 213.8 374.7 ...
+   'data.frame':	253 obs. of  6 variables:
+    $ STATION: chr  "Dom_Rep" "Dom_Rep" "Dom_Rep" "Dom_Rep" ...
+    $ DATE   : Date, format: "1996-06-01" "1996-07-01" "1996-08-01" "1996-09-01" ...
+    $ TAVG   : num  28.2 28 28.4 27.9 27.6 ...
+    $ TMIN   : num  23.1 22.7 23 22.2 22.1 ...
+    $ TMAX   : num  33.2 33.3 33.8 33.5 33.2 ...
+    $ PRCP   : num  NA NA NA NA NA NA NA NA NA NA ...
+   'data.frame':	214 obs. of  6 variables:
+    $ STATION: chr  "Indonesia" "Indonesia" "Indonesia" "Indonesia" ...
+    $ DATE   : Date, format: "1958-04-01" "1974-05-01" "1974-11-01" "1976-10-01" ...
+    $ TAVG   : num  27.4 NA NA NA NA NA NA NA NA NA ...
+    $ TMIN   : num  22.6 NA NA NA NA ...
+    $ TMAX   : num  32.2 NA NA NA NA ...
+    $ PRCP   : num  NA 4.1 13 0 0 0 0 4.1 15 19.8 ...
+   'data.frame':	259 obs. of  6 variables:
+    $ STATION: chr  "Ivory_Coast" "Ivory_Coast" "Ivory_Coast" "Ivory_Coast" ...
+    $ DATE   : Date, format: "1978-10-01" "1978-11-01" "1978-12-01" "1979-01-01" ...
+    $ TAVG   : num  NA 26.3 NA NA NA ...
+    $ TMIN   : num  NA 23.1 NA NA NA ...
+    $ TMAX   : num  NA 29.6 NA 30.6 30.6 ...
+    $ PRCP   : num  25.7 13.4 123.9 NA NA ...
+   'data.frame':	306 obs. of  6 variables:
+    $ STATION: chr  "Peru" "Peru" "Peru" "Peru" ...
+    $ DATE   : Date, format: "1963-03-01" "1963-07-01" "1963-10-01" "1963-11-01" ...
+    $ TAVG   : num  NA NA NA NA NA NA NA NA NA NA ...
+    $ TMIN   : num  21.2 17.8 19.2 19.7 19.4 ...
+    $ TMAX   : num  NA NA NA NA NA NA NA NA NA NA ...
+    $ PRCP   : num  NA NA NA NA NA NA NA NA NA NA ...
+   #+end_example
+
+   #+begin_src R
+   df_combined <- rbind(df_2, df_3, df_6, df_7, df_9)
+
+   df_combined <- df_combined[order(df_combined$DATE), ]
+
+   row.names(df_combined) <- NULL
+
+   head(df_combined, n = 24)
+   #+end_src
+
+   #+RESULTS:
+   #+begin_example
+   STATION       DATE  TAVG  TMIN  TMAX  PRCP
+   1  Colombia 1948-01-01 26.98 23.05 30.91  40.2
+   2  Colombia 1948-02-01 27.30 23.13 31.46 126.3
+   3  Colombia 1948-03-01 27.53 23.55 31.52 145.1
+   4  Colombia 1948-04-01 27.19 22.93 31.45 213.8
+   5  Colombia 1948-05-01 27.15 23.38 30.91 374.7
+   6  Colombia 1948-06-01 25.96 22.82 29.10 437.2
+   7  Colombia 1948-07-01 24.79 22.58 27.00 763.8
+   8  Colombia 1948-08-01 24.48 22.54 26.42 641.7
+   9  Colombia 1948-09-01 25.30 22.63 27.97 445.1
+   10 Colombia 1948-10-01 25.78 22.16 29.39 454.4
+   11 Colombia 1948-11-01 25.98 22.33 29.62 107.7
+   12 Colombia 1948-12-01 27.03 23.20 30.87  20.5
+   13 Colombia 1949-01-01 27.35 23.32 31.38  58.8
+   14 Colombia 1949-02-01 27.21 23.00 31.43  66.6
+   15 Colombia 1949-03-01 27.55 23.39 31.70 123.5
+   16 Colombia 1949-04-01 27.07 22.87 31.26 348.9
+   17 Colombia 1949-05-01 27.31 23.31 31.31 373.4
+   18 Colombia 1949-06-01 26.16 22.76 29.56 366.9
+   19 Colombia 1949-07-01 25.42 22.72 28.12 785.9
+   20 Colombia 1949-08-01 25.06 22.40 27.71 587.4
+   21 Colombia 1949-09-01 25.57 22.54 28.60 456.4
+   22 Colombia 1949-10-01 26.09 22.33 29.85 355.2
+   23 Colombia 1949-11-01 27.01 23.09 30.92  94.1
+   24 Colombia 1949-12-01 27.42 23.28 31.56   9.1
+   #+end_example
+** Cacao Production Data:
+
+- We're taking full advantage of the fact we can run BASH in org:
+
+#+begin_src bash
+unzip -l datasets/cocoa-bean-production.filtered.zip
+
+# unzip -l showed us there's multiple files, of which we really only care about the CSV.
+unzip datasets/cocoa-bean-production.filtered.zip -d datasets/
+#+end_src
+
+#+RESULTS:
+| Archive:  | datasets/cocoa-bean-production.filtered.zip |       |                                     |
+| Length    | Date                                        |  Time | Name                                |
+| --------- | ----------                                  | ----- | ----                                |
+| 1468      | 02-01-2025                                  | 04:51 | cocoa-bean-production.metadata.json |
+| 1942      | 02-01-2025                                  | 04:51 | cocoa-bean-production.csv           |
+| 3922      | 02-01-2025                                  | 04:51 | readme.md                           |
+| --------- | -------                                     |       |                                     |
+| 7332      | 3                                           | files |                                     |
+| Archive:  | datasets/cocoa-bean-production.filtered.zip |       |                                     |
+
+- Now, let's get this data into R:
+  As I import this, I realize these are only statistics from 2022.
+  I have to revisit the FAO website and find data for the list of countries I determined from ~df_combined~
+  So, this dataframe is getting shelved for now.
+
+  #+begin_src R
+  #read.csv("datasets/cocoa-bean-production.csv", header = TRUE)
+
+  #+end_src
+
+  #+RESULTS:
+
+- With the correct data, per FAO:
+  #+begin_src R
+  crop_df <- read.csv("datasets/cocoa-bean-production-all.csv", header = TRUE)
+  str(crop_df)
+  #+end_src
+
+  #+RESULTS:
+  #+begin_example
+  'data.frame':	630 obs. of  15 variables:
+   $ Domain.Code     : chr  "QCL" "QCL" "QCL" "QCL" ...
+   $ Domain          : chr  "Crops and livestock products" "Crops and livestock products" "Crops and livestock products" "Crops and livestock products" ...
+   $ Area.Code..M49. : int  170 170 170 170 170 170 170 170 170 170 ...
+   $ Area            : chr  "Colombia" "Colombia" "Colombia" "Colombia" ...
+   $ Element.Code    : int  5412 5510 5412 5510 5412 5510 5412 5510 5412 5510 ...
+   $ Element         : chr  "Yield" "Production" "Yield" "Production" ...
+   $ Item.Code..CPC. : int  1640 1640 1640 1640 1640 1640 1640 1640 1640 1640 ...
+   $ Item            : chr  "Cocoa beans" "Cocoa beans" "Cocoa beans" "Cocoa beans" ...
+   $ Year.Code       : int  1961 1961 1962 1962 1963 1963 1964 1964 1965 1965 ...
+   $ Year            : int  1961 1961 1962 1962 1963 1963 1964 1964 1965 1965 ...
+   $ Unit            : chr  "kg/ha" "t" "kg/ha" "t" ...
+   $ Value           : num  433 14300 441 15000 449 ...
+   $ Flag            : chr  "A" "A" "A" "A" ...
+   $ Flag.Description: chr  "Official figure" "Official figure" "Official figure" "Official figure" ...
+   $ Note            : chr  "" "" "" "" ...
+  #+end_example
+
+- Of this, we're only going to keep some of this.  I'm undecided if production in terms of kg/hectare or total output per country in tonnes is more important...
+  #+begin_src R
+  column_names <- c("Area", "Year", "Unit", "Value")
+  crop_df <- crop_df[, column_names]
+  #+end_src
+
+  #+RESULTS:
+
+- We also need to keep the names consistent for simplicity's sake
+  #+begin_src R
+  crop_df$Area <- ifelse(crop_df$Area == "Côte d'Ivoire", "Ivory_Coast", crop_df$Area)
+  crop_df$Area <- ifelse(crop_df$Area == "Dominican Republic", "Dom_Rep", crop_df$Area)
+
+  unique(crop_df$Area)
+  #+end_src
+
+  #+RESULTS:
+  : [1] "Colombia"    "Ivory_Coast" "Dom_Rep"     "Indonesia"   "Peru"
+
+- The value column is unweildy.  Ideally, we'd have a separate column for total_output in tonnes
+  and an production in kg/ha column. Honestly, I'm unsure how to do this, so
+  I'm instead going to break off two dataframes, one for "t" values and one for "kg/ha"
+
+  #+begin_src R
+  crop_df_t <- subset(crop_df, Unit == "t")
+  colnames(crop_df_t)[colnames(crop_df_t) == "Value"] <- "Tonnes"
+  crop_df_t$Unit <- NULL
+
+  crop_df_kgha <- subset(crop_df, Unit == "kg/ha")
+  colnames(crop_df_kgha)[colnames(crop_df_kgha) == "Value"] <- "kgha"
+  crop_df_kgha$Unit <- NULL
+
+  str(crop_df_t)
+  str(crop_df_kgha)
+  #+end_src
+
+  #+RESULTS:
+  : 'data.frame':	315 obs. of  3 variables:
+  :  $ Area  : chr  "Colombia" "Colombia" "Colombia" "Colombia" ...
+  :  $ Year  : int  1961 1962 1963 1964 1965 1966 1967 1968 1969 1970 ...
+  :  $ Tonnes: num  14300 15000 15700 16400 17100 17800 17000 18000 18500 19000 ...
+  : 'data.frame':	315 obs. of  3 variables:
+  :  $ Area: chr  "Colombia" "Colombia" "Colombia" "Colombia" ...
+  :  $ Year: int  1961 1962 1963 1964 1965 1966 1967 1968 1969 1970 ...
+  :  $ kgha: num  433 441 449 443 457 ...
+
+- The Year column is problematic, since R doesn't recognize it as a date.
+  I'm going to assume the values for production are universally valid as of end of year (December 31) for simplicity's sake?
+
+  #+begin_src R
+
+   # The date values for the crop_df_t dataframe are still in ints and not recognized as date values, yet.
+   str(crop_df_t)
+
+   # We're going to assume the crop data is valid as of end-of-year for simplicity.  IDK when the metrics are recorded and could vary by place.  ?
+   crop_df_t$Date <- as.Date(paste0(crop_df_t$Year, "-12-31"))
+
+   str(crop_df_t)
+
+   # We're going to do the same for the other df, though IDK if we're going to need it, yet.
+   crop_df_kgha$Date <- as.Date(paste0(crop_df_kgha$Year, "-12-31"))
+
+   # And, we're going to drop the year-only column...
+   #crop_df_t$Year <- NULL
+   #crop_df_kgha$Year <- NULL
+  #+end_src
+
+  #+RESULTS:
+  : 'data.frame':	315 obs. of  3 variables:
+  :  $ Area  : chr  "Colombia" "Colombia" "Colombia" "Colombia" ...
+  :  $ Year  : int  1961 1962 1963 1964 1965 1966 1967 1968 1969 1970 ...
+  :  $ Tonnes: num  14300 15000 15700 16400 17100 17800 17000 18000 18500 19000 ...
+  : 'data.frame':	315 obs. of  4 variables:
+  :  $ Area  : chr  "Colombia" "Colombia" "Colombia" "Colombia" ...
+  :  $ Year  : int  1961 1962 1963 1964 1965 1966 1967 1968 1969 1970 ...
+  :  $ Tonnes: num  14300 15000 15700 16400 17100 17800 17000 18000 18500 19000 ...
+  :  $ Date  : Date, format: "1961-12-31" "1962-12-31" "1963-12-31" "1964-12-31" ...
+
+* Merging the Data:
+- We've now got the problem of yearly production data, but monthly climate data.
+  Averaging the climate data for the entire year seems inaccurate.  Anything can happen in 12 months
+  Which could throw off our results.  *We know from the lit review that the pods take a very long time to mature and ripen.*
+
+- For now, I think just adding a column to the monthly data and inserting the export results for that year is the way to go?
+
+  #+begin_src R
+    # Temporarily, we need a Year var to reference...
+    df_combined$Year <- as.numeric(format(df_combined$DATE, "%Y"))
+
+    # also needs a STATION tab just so we can merge it...
+    crop_df_t$STATION <- crop_df_t$Area
+    crop_df_kgha$STATION <- crop_df_kgha$Area
+
+    # Ok, now we're going to combine
+    df_combined <- merge(df_combined, crop_df_t[, c("STATION", "Year", "Tonnes")], by = c("STATION", "Year"), all.x = TRUE)
+
+    df_combined <- merge(df_combined, crop_df_kgha[, c("STATION", "Year", "kgha")], by = c("STATION", "Year"), all.x = TRUE)
+
+    df_combined$Year <- NULL
+  #+end_src
+
+  #+RESULTS:
+
+- Convert stations to factors:
+  These need to be factors for our later models.
+  #+begin_src R
+    df_combined$STATION <- as.factor(df_combined$STATION)
+  #+end_src
+
+  #+RESULTS:
+
+* Imputation
+- Below, I'm going to set up several different ways to do this, which I can visit later and tweak as needed to tune performance later:
+
+- ~Mean value imputation:~
+  We'll stick to this for now:
+  #+begin_src R
+    # impute the values using mean value imputation:
+
+    # Locate NA values for each column:
+    na_tavg <- is.na(df_combined$TAVG)
+    na_tmin <- is.na(df_combined$TMIN)
+    na_tmax <- is.na(df_combined$TMAX)
+    na_prcp <- is.na(df_combined$PRCP)
+    na_kgha <- is.na(df_combined$kgha)
+    na_tonnes<-is.na(df_combined$Tonnes)
+
+    df_combined$TAVG[na_tavg] <- mean(df_combined$TAVG, na.rm = TRUE)
+    df_combined$TMIN[na_tmin] <- mean(df_combined$TMIN, na.rm = TRUE)
+    df_combined$TMAX[na_tmax] <- mean(df_combined$TMAX, na.rm = TRUE)
+    df_combined$PRCP[na_prcp] <- mean(df_combined$PRCP, na.rm = TRUE)
+    df_combined$kgha[na_kgha] <- mean(df_combined$kgha, na.rm = TRUE)
+    df_combined$Tonnes[na_tonnes] <- mean(df_combined$Tonnes, na.rm = TRUE)
+
+    summary(df_combined)
+  #+end_src
+
+  #+RESULTS:
+  #+begin_example
+  STATION         DATE                 TAVG            TMIN            TMAX            PRCP
+   Colombia   :198   Min.   :1948-01-01   Min.   :22.42   Min.   :15.58   Min.   :26.03   Min.   :  0.0
+   Dom_Rep    :253   1st Qu.:1989-03-01   1st Qu.:26.54   1st Qu.:21.52   1st Qu.:31.18   1st Qu.:215.7
+   Indonesia  :214   Median :2004-06-16   Median :26.54   Median :21.68   Median :31.40   Median :215.7
+   Ivory_Coast:259   Mean   :2001-07-08   Mean   :26.54   Mean   :21.68   Mean   :31.40   Mean   :215.7
+   Peru       :306   3rd Qu.:2015-12-24   3rd Qu.:26.54   3rd Qu.:22.33   3rd Qu.:31.88   3rd Qu.:215.7
+                     Max.   :2024-12-01   Max.   :29.50   Max.   :25.46   Max.   :35.89   Max.   :929.4
+       Tonnes             kgha
+   Min.   :   1795   Min.   : 204.7
+   1st Qu.:  37107   1st Qu.: 457.9
+   Median :  78508   Median : 512.9
+   Mean   : 381426   Mean   : 536.7
+   3rd Qu.: 565042   3rd Qu.: 562.8
+   Max.   :2377442   Max.   :1132.3
+  #+end_example
+
+- ~Median imputation:~
+  #+begin_src R
+    # impute the values using median value imputation:
+
+    # Locate NA values for each column:
+    #na_tavg <- is.na(df_combined$TAVG)
+    #na_tmin <- is.na(df_combined$TMIN)
+    #na_tmax <- is.na(df_combined$TMAX)
+    #na_prcp <- is.na(df_combined$PRCP)
+    #na_kgha <- is.na(df_combined$kgha)
+    #na_tonnes<-is.na(df_combined$Tonnes)
+
+    #df_combined$TAVG[na_tavg] <- median(df_combined$TAVG, na.rm = TRUE)
+    #df_combined$TMIN[na_tmin] <- median(df_combined$TMIN, na.rm = TRUE)
+    #df_combined$TMAX[na_tmax] <- median(df_combined$TMAX, na.rm = TRUE)
+    #df_combined$PRCP[na_prcp] <- median(df_combined$PRCP, na.rm = TRUE)
+    #df_combined$kgha[na_kgha] <- median(df_combined$kgha, na.rm = TRUE)
+    #df_combined$Tonnes[na_tonnes] <- median(df_combined$Tonnes, na.rm = TRUE)
+  #+end_src
+
+  #+RESULTS:
+
+- ~Spline imputation:~
+  #+begin_src R
+    # impute the values with linear interpolation:
+    # zoo package is helpful for this...
+    #install.packages("zoo")
+    #library(zoo)
+
+    #df_combined$TAVG <- zoo::na.spline(df_combined$TAVG)
+    #df_combined$TMIN <- zoo::na.spline(df_combined$TMIN)
+    #df_combined$TMAX <- zoo::na.spline(df_combined$TMAX)
+    #df_combined$PRCP <- zoo::na.spline(df_combined$PRCP)
+    #df_combined$kgha <- zoo::na.spline(df_combined$kgha)
+    #df_combined$Tonnes <- zoo::na.spline(df_combined$Tonnes)
+
+    ## check summary again:
+    #summary(df_combined)
+  #+end_src
+
+  #+RESULTS:
+
+* Exporting the Data:
+- Now that we have this cleaned data, let's export it.  This is relatively straightforward in R.
+  #+begin_src R :results silent
+  save(df_combined, file = "datasets/cleaned_climate_data.RData")
+  write.csv(df_combined, file = "datasets/cleaned_climate_data.csv", row.names = FALSE)
+
+  save(crop_df_t, file = "datasets/crop_data_tonnes.RData")
+  write.csv(crop_df_t, file = "datasets/crop_data_tonnes.csv", row.names = FALSE)
+
+  save(crop_df_kgha, file = "datasets/crop_data_kilograms-per-hectare.RData")
+  write.csv(crop_df_kgha, file = "datasets/crop_data_kilograms-per-hectare.csv", row.names = FALSE)
+  #+end_src

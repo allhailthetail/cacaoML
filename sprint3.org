@@ -1,0 +1,31 @@
+#+title: Sprint 3
+#+author: Matthew Younger | Pledged
+#+date: <2025-03-27 Thu>
+#+STARTUP: overview hideblocks indent
+#+bibliography: references.bib
+
+* Group Members:
+
+| Team Member     |
+|-----------------|
+| Matthew Younger |
+
+* Sprint 3:
+- Further work needed to be done arranging the datasets. Particularly, work on ~cleaned_climate_data.~
+- Value imputation
+* Pyramid Principle - SCQA Method
+- Situation [Slide 1]
+  head nod
+
+- Complication [Slide 2]
+  eyebrows knit
+
+- Question [Slide 3]
+  Your central research question
+
+- Answer [Slide 4]
+  Results so far in logical order
+
+* AI Disclaimer:
+AI was used for this final portion of the project.  I've found that my newness and lack of experience in using the various ML models throughout the course has left me feeling like a lack of hands-on use with the various tools
+has inhibited me from finding good patterns.  I'm also not terribly well-versed in statistics, which is making evaluating whether a given result is favorable or statistically significant a real challenge.
